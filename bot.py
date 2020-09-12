@@ -12,6 +12,9 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 bot = Bot(command_prefix='$')
 
+#global variables
+run = True
+
 #ready up
 @bot.event
 async def on_ready():
@@ -20,31 +23,46 @@ async def on_ready():
 #command initiate
 @bot.command(name="initiate")
 async def initiate(ctx):
-    await ctx.send('Attendance Reminders Initiated')
+    await ctx.send("Attendance reminders initiated. Use command \"$pause\" to hault reminders.")
     count=0
     while True:
-        current_time = datetime.now().time()
-        day_of_week = datetime.today().weekday()
-        if current_time.hour==13 and current_time.minute==12 and current_time.second==0 and not(day_of_week==6 or day_of_week==5):
-            if count%2==0:
-                await ctx.send("Top of the morning! Remember to record your attendance.")
-                count=count+1
-                await time.sleep(60)
-            elif count%3==0:
-                await ctx.send("Buenos Días! Recuerde registrar tu asistencia.")
-                count=count+1
-                await time.sleep(60)
-            elif count%5==0:
-                await ctx.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                count=count+1
-                await time.sleep(60)
-            elif count%7==0:
-                await ctx.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                count=count+1
-                await time.sleep(60)
-            else:
-                await ctx.send("Scrumptuous day! Remember to recrod your attendance.")
-                count=count+1
-                await time.sleep(60)
-            
+        await asyncio.sleep(1)
+        global run
+        if run:
+            current_time = datetime.now().time()
+            day_of_week = datetime.today().weekday()
+            if current_time.hour==15 and (current_time.minute==23) and current_time.second==0: # and not(day_of_week==6 or day_of_week==5)
+                if count%2==0:
+                    await ctx.send("Top of the morning! Remember to record your attendance.")
+                    count=count+1
+                    await asyncio.sleep(60)
+                elif count%3==0:
+                    await ctx.send("Buenos Días! Recuerde registrar tu asistencia.")
+                    count=count+1
+                    await asyncio.sleep(60)
+                elif count%5==0:
+                    await ctx.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
+                    count=count+1
+                    await asyncio.sleep(60)
+                elif count%7==0:
+                    await ctx.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
+                    count=count+1
+                    await asyncio.sleep(60)
+                else:
+                    await ctx.send("Scrumptuous day! Remember to recrod your attendance.")
+                    count=count+1
+                    await asyncio.sleep(60)
+
+@bot.command(name="pause")
+async def pause(ctx):
+    await ctx.send("Attendance reminders paused. Use command \"$resume\" to unpause reminders.")
+    global run
+    run=False
+
+@bot.command(name="resume")
+async def resume(ctx):
+    await ctx.send("Attendance reminder resumed. Use command \"$pause\" to hault reminders.")
+    global run
+    run=True
+
 bot.run(TOKEN)
