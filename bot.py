@@ -31,7 +31,7 @@ async def initiate(ctx):
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
-            if current_time.hour==15 and (current_time.minute==23) and current_time.second==0: # and not(day_of_week==6 or day_of_week==5)
+            if current_time.hour==7 and current_time.minute==0 and current_time.second==0 and not(day_of_week==6 or day_of_week==5):
                 if count%2==0:
                     await ctx.send("Top of the morning! Remember to record your attendance.")
                     count=count+1
