@@ -23,6 +23,7 @@ async def on_ready():
 #command initiate
 @bot.command(name="initiate")
 async def initiate(ctx):
+    print("Initiate command received.")
     await ctx.send("Attendance reminders initiated. Use command \"$pause\" to hault reminders.")
     count=0
     while True:
@@ -55,12 +56,14 @@ async def initiate(ctx):
 
 @bot.command(name="pause")
 async def pause(ctx):
+    print("Pause command received.")
     await ctx.send("Attendance reminders paused. Use command \"$resume\" to unpause reminders.")
     global run
     run=False
 
 @bot.command(name="resume")
 async def resume(ctx):
+    print("Resume command received.")
     await ctx.send("Attendance reminder resumed. Use command \"$pause\" to hault reminders.")
     global run
     run=True
