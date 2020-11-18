@@ -122,6 +122,6 @@ async def hurtFeelings(ctx):
     sms = msg.as_string()
 
     server.sendmail(email, sms_gateway, sms)
-    ctx.send("{} Check your email ( ͡° ͜ʖ ͡°)".format(ctx.message.author.mention))
+    await ctx.send("{} Check your email ( ͡° ͜ʖ ͡°)".format(ctx.message.author.mention))
 
 bot.run(TOKEN)
