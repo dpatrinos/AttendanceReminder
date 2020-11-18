@@ -1,16 +1,20 @@
-
 import os
 import asyncio
 import discord
-from discord.ext.commands import Bot
+from discord.ext import commands
 from datetime import datetime
 import time
 from dotenv import load_dotenv
+import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-#initialize bot variables
+#initialize bot and client variables
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-bot = Bot(command_prefix='$')
+bot = commands.Bot(command_prefix='$')
+client = discord.Client()
 
 #global variables
 run = True
@@ -19,40 +23,40 @@ run = True
 @bot.event
 async def on_ready():
     print("Logged in as",bot.user.name)
+    ID = int(os.getenv('CHANNEL_ID'))
+    channel = bot.get_channel(ID)
+    await channel.send('Hello! I\'m here to steal jobs from the proletariat!')
 
 #command initiate
 @bot.command(name="initiate")
 async def initiate(ctx):
     print("Initiate command received.")
     await ctx.send("Attendance reminders initiated. Use command \"$pause\" to hault reminders.")
-    count=0
     while True:
-        await asyncio.sleep(1)
+        await asyncio.sleep(5)
         global run
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
             if current_time.hour==7 and current_time.minute==0 and current_time.second==0 and not(day_of_week==6 or day_of_week==5):
-                if count%2==0:
+                num=random.randint(0,100)
+                if num%2==0:
                     await ctx.send("Top of the morning! Remember to record your attendance.")
-                    count=count+1
-                    await asyncio.sleep(60)
-                elif count%3==0:
+                    await asyncio.sleep(1)
+                elif num%3==0:
                     await ctx.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    count=count+1
-                    await asyncio.sleep(60)
-                elif count%5==0:
+                    await asyncio.sleep(1)
+                elif num%5==0:
                     await ctx.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    count=count+1
-                    await asyncio.sleep(60)
-                elif count%7==0:
+                    await asyncio.sleep(1)
+                elif num%7==0:
                     await ctx.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    count=count+1
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(1)
                 else:
-                    await ctx.send("Scrumptuous day! Remember to recrod your attendance.")
-                    count=count+1
-                    await asyncio.sleep(60)
+                    await ctx.send("Scrumptuous day! Remember to record your attendance.")
+                    await asyncio.sleep(1)
+        else:
+            print("if statment passed.")
 
 @bot.command(name="pause")
 async def pause(ctx):
@@ -64,8 +68,60 @@ async def pause(ctx):
 @bot.command(name="resume")
 async def resume(ctx):
     print("Resume command received.")
-    await ctx.send("Attendance reminder resumed. Use command \"$pause\" to hault reminders.")
+    await ctx.send("Attendance reminder resumed. Use command \"$pause\" to halt reminders.")
     global run
     run=True
+
+@bot.command(name="hello-there")
+async def helloThere(ctx):
+    print("Kenobi command received.")
+    file = discord.File("media/grievous.mp4", filename="grievous.mp4")
+    await ctx.send(file=file)
+
+@bot.command(name="hurt-feelings")
+async def hurtFeelings(ctx):
+    print("Feelings command received.")
+    
+    email = os.getenv('EMAIL')
+    password = os.getenv('PASSWORD')
+
+    author_id = ctx.message.author.id
+
+    if author_id==int(os.getenv('EVAN')):
+        sms_gateway = os.getenv('EVAN_E')
+
+    elif author_id==int(os.getenv('ETHAN')):
+        sms_gateway = os.getenv('ETHAN_E')
+        
+    elif author_id==int(os.getenv('TOBY')):
+        sms_gateway = os.getenv('TOBY_E')
+
+    elif author_id==int(os.getenv('TANUSH')):
+        sms_gateway = os.getenv('TANUSH_E')
+
+    elif author_id==int(os.getenv('CHRISTIAN')):
+        sms_gateway = os.getenv('CHRISTIAN_E')
+
+    else:
+        sms_gateway = os.getenv('DEMETRI_E')
+
+    smtp = "smtp.comcast.net"
+    port = 587
+
+    server = smtplib.SMTP(smtp,port)
+    server.starttls()
+    server.login(email,password)
+
+    msg = MIMEMultipart()
+    msg['From'] = email
+    msg['To'] = sms_gateway
+    msg['Subject'] = "I'm watching you"
+    body = "Don't screw with me."
+    msg.attach(MIMEText(body, 'plain'))
+
+    sms = msg.as_string()
+
+    server.sendmail(email, sms_gateway, sms)
+    ctx.send("{} Check your email ( ͡° ͜ʖ ͡°)".format(ctx.message.author.mention))
 
 bot.run(TOKEN)
