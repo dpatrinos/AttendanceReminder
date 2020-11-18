@@ -33,7 +33,7 @@ async def initiate(ctx):
     print("Initiate command received.")
     await ctx.send("Attendance reminders initiated. Use command \"$pause\" to halt reminders.")
     while True:
-        await asyncio.sleep(1)
+        await asyncio.sleep(10)
         global run
         if run:
             current_time = datetime.now().time()
