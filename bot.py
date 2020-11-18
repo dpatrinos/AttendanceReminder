@@ -23,17 +23,17 @@ run = True
 @bot.event
 async def on_ready():
     print("Logged in as",bot.user.name)
-    ID = int(os.getenv('CHANNEL_ID'))
-    channel = bot.get_channel(ID)
-    await channel.send('Hello! I\'m here to steal jobs from the proletariat!')
+    #ID = int(os.getenv('CHANNEL_ID'))
+    #channel = bot.get_channel(ID)
+    #await channel.send('Hello! I\'m here to steal jobs from the proletariat!')
 
 #command initiate
 @bot.command(name="initiate")
 async def initiate(ctx):
     print("Initiate command received.")
-    await ctx.send("Attendance reminders initiated. Use command \"$pause\" to hault reminders.")
+    await ctx.send("Attendance reminders initiated. Use command \"$pause\" to halt reminders.")
     while True:
-        await asyncio.sleep(5)
+        await asyncio.sleep(1)
         global run
         if run:
             current_time = datetime.now().time()
@@ -55,8 +55,8 @@ async def initiate(ctx):
                 else:
                     await ctx.send("Scrumptuous day! Remember to record your attendance.")
                     await asyncio.sleep(1)
-        else:
-            print("if statment passed.")
+            else:
+                print("Time if statment passed.")
 
 @bot.command(name="pause")
 async def pause(ctx):
