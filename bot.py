@@ -38,23 +38,23 @@ async def initiate(ctx):
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
-            if current_time.hour==7 and current_time.minute==0 and current_time.second==0 and not(day_of_week==6 or day_of_week==5):
+            if current_time.hour==7 and current_time.minute==0 and not(day_of_week==6 or day_of_week==5):
                 num=random.randint(0,100)
                 if num%2==0:
                     await ctx.send("Top of the morning! Remember to record your attendance.")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
                 elif num%3==0:
                     await ctx.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
                 elif num%5==0:
                     await ctx.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
                 elif num%7==0:
                     await ctx.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
                 else:
                     await ctx.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(60)
             else:
                 print("Time if statment passed.")
 
