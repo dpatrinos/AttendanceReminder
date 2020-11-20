@@ -124,4 +124,16 @@ async def hurtFeelings(ctx):
     server.sendmail(email, sms_gateway, sms)
     await ctx.send("{} Check your email ( ͡° ͜ʖ ͡°)".format(ctx.message.author.mention))
 
+@bot.command(name="i-am-sad")
+async def sad(ctx):
+    print('Sad command received.')
+
+    num = random.randint(1,9)
+
+    name_string = "media/dog" + str(num) + ".jpg"
+
+    file = discord.File(name_string, filename="doggo.jpg")
+    await ctx.send(file=file)
+    await ctx.send("Here is a doggo for you.")
+
 bot.run(TOKEN)
