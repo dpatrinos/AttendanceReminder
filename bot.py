@@ -9,6 +9,8 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from webdriver import driver
+import urllib.request
 
 #initialize bot and client variables
 load_dotenv()
@@ -23,40 +25,39 @@ run = True
 @bot.event
 async def on_ready():
     print("Logged in as",bot.user.name)
-    #ID = int(os.getenv('CHANNEL_ID'))
-    #channel = bot.get_channel(ID)
-    #await channel.send('Hello! I\'m here to steal jobs from the proletariat!')
-
-#command initiate
-@bot.command(name="initiate")
-async def initiate(ctx):
-    print("Initiate command received.")
-    await ctx.send("Attendance reminders initiated. Use command \"$pause\" to halt reminders.")
+    ID = int(os.getenv('CHANNEL_ID'))
+    channel = bot.get_channel(ID)
+    
     while True:
         await asyncio.sleep(10)
         global run
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
-            if current_time.hour==7 and current_time.minute==0 and not(day_of_week==6 or day_of_week==5):
+            if True:#current_time.hour==7 and current_time.minute==2 and not(day_of_week==6 or day_of_week==5):
+                print("Time if statement true.")
+                getQuote()
+                file = discord.File("quote.png", filename="quote.png")
+                await channel.send(file=file)
+                os.remove("quote.png")
                 num=random.randint(0,100)
                 if num%2==0:
-                    await ctx.send("Top of the morning! Remember to record your attendance.")
+                    await channel.send("Top of the morning! Remember to record your attendance.")
                     await asyncio.sleep(60)
                 elif num%3==0:
-                    await ctx.send("Buenos Días! Recuerde registrar tu asistencia.")
+                    await channel.send("Buenos Días! Recuerde registrar tu asistencia.")
                     await asyncio.sleep(60)
                 elif num%5==0:
-                    await ctx.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
+                    await channel.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
                     await asyncio.sleep(60)
                 elif num%7==0:
-                    await ctx.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
+                    await channel.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
                     await asyncio.sleep(60)
                 else:
-                    await ctx.send("Scrumptuous day! Remember to record your attendance.")
+                    await channel.send("Scrumptuous day! Remember to record your attendance.")
                     await asyncio.sleep(60)
             else:
-                print("Time if statment passed.")
+                print("Time if statment false.")
 
 @bot.command(name="pause")
 async def pause(ctx):
@@ -128,12 +129,23 @@ async def hurtFeelings(ctx):
 async def sad(ctx):
     print('Sad command received.')
 
-    num = random.randint(1,9)
+    num = random.randint(1,17)
 
     name_string = "media/dog" + str(num) + ".jpg"
 
     file = discord.File(name_string, filename="doggo.jpg")
     await ctx.send(file=file)
     await ctx.send("Here is a doggo for you.")
+
+def getQuote():
+    print("Fetching quote")
+    email = os.getenv("MICRO_E")
+    password = os.getenv("MICRO_P")
+    main_driver = driver()
+    main_driver.microsoftLogin(email, password)
+    src = main_driver.getSrc()
+    print(src)
+    urllib.request.urlretrieve(src, "quote.png")
+    
 
 bot.run(TOKEN)

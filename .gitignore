@@ -1,2 +1,7 @@
 .env
 .DS_Store
+/.vscode
+/venv
+geckodriver.log
+debug.log
+/__pycache__
