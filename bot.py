@@ -35,7 +35,7 @@ async def on_ready():
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
             if True:#current_time.hour==7 and current_time.minute==2 and not(day_of_week==6 or day_of_week==5):
-                print("Time if statement true.")
+                print("Time if statement true")
                 getQuote()
                 file = discord.File("quote.png", filename="quote.png")
                 await channel.send(file=file)
@@ -57,31 +57,31 @@ async def on_ready():
                     await channel.send("Scrumptuous day! Remember to record your attendance.")
                     await asyncio.sleep(60)
             else:
-                print("Time if statment false.")
+                print("Time if statment false")
 
 @bot.command(name="pause")
 async def pause(ctx):
-    print("Pause command received.")
+    print("Pause command received")
     await ctx.send("Attendance reminders paused. Use command \"$resume\" to unpause reminders.")
     global run
     run=False
 
 @bot.command(name="resume")
 async def resume(ctx):
-    print("Resume command received.")
+    print("Resume command received")
     await ctx.send("Attendance reminder resumed. Use command \"$pause\" to halt reminders.")
     global run
     run=True
 
 @bot.command(name="hello-there")
 async def helloThere(ctx):
-    print("Kenobi command received.")
+    print("Kenobi command received")
     file = discord.File("media/grievous.mp4", filename="grievous.mp4")
     await ctx.send(file=file)
 
 @bot.command(name="hurt-feelings")
 async def hurtFeelings(ctx):
-    print("Feelings command received.")
+    print("Feelings command received")
     
     email = os.getenv('EMAIL')
     password = os.getenv('PASSWORD')
@@ -127,7 +127,7 @@ async def hurtFeelings(ctx):
 
 @bot.command(name="i-am-sad")
 async def sad(ctx):
-    print('Sad command received.')
+    print('Sad command received')
 
     num = random.randint(1,17)
 
