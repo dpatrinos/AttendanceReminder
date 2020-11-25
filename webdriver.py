@@ -16,7 +16,7 @@ class driver:
         options = Options()
         options.add_argument("--headless")
         path = os.getenv("GECKODRIVER_PATH")
-        self.driver = webdriver.Firefox(options=options, executable_path=path)
+        self.driver = webdriver.Firefox(executable_path=path)
 
     def closeDriver(self):
         self.driver.close()
