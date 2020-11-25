@@ -11,12 +11,12 @@ import dotenv
 
 class driver:
     def __init__(self):
-        cap = DesiredCapabilities().FIREFOX
-        cap["marionette"] = True
+        #cap = DesiredCapabilities().FIREFOX
+        #cap["marionette"] = True
         options = Options()
         options.add_argument("--headless")
-        path = os.getenv("GECKODRIVER_PATH")
-        self.driver = webdriver.Firefox(capabilities=cap, options=options, executable_path=path)
+        #path = os.getenv("GECKODRIVER_PATH")
+        self.driver = webdriver.Firefox(options=options)
 
     def closeDriver(self):
         self.driver.close()
