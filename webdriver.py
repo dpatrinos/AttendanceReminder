@@ -15,8 +15,8 @@ class driver:
         #cap["marionette"] = True
         options = Options()
         options.add_argument("--headless")
-        #path = os.getenv("GECKODRIVER_PATH")
-        self.driver = webdriver.Firefox(options=options)
+        path = os.getenv("GECKODRIVER_PATH")
+        self.driver = webdriver.Firefox(options=options, executable_path=path)
 
     def closeDriver(self):
         self.driver.close()
