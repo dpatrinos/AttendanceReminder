@@ -146,6 +146,6 @@ def getQuote():
     src = main_driver.getSrc()
     print(src)
     urllib.request.urlretrieve(src, "quote.png")
-    
+    main_driver.closeDriver()
 
 bot.run(TOKEN)
