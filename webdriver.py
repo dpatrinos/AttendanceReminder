@@ -14,7 +14,9 @@ class driver:
         cap = DesiredCapabilities().FIREFOX
         cap["marionette"] = True
         options = Options()
-        options.add_argument("-headless")
+        options.add_argument("--headless")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
         path = os.getenv("GECKODRIVER_PATH")
         self.driver = webdriver.Firefox(capabilities=cap, executable_path=path, options=options)
 
