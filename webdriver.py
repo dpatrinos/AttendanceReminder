@@ -14,7 +14,7 @@ class driver:
         #cap = DesiredCapabilities().FIREFOX
         #cap["marionette"] = True
         options = Options()
-        options.add_argument("--headless")
+        options.add_argument("-headless")
         path = os.getenv("GECKODRIVER_PATH")
         self.driver = webdriver.Firefox(executable_path=path)
 
