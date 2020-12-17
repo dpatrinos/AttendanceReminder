@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,7 +19,8 @@ class driver:
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--no-sandbox")
         path = os.getenv("GECKODRIVER_PATH")
-        self.driver = webdriver.Firefox(capabilities=cap, executable_path=path, options=options)
+        binary = FirefoxBinary(os.getenv("FIREFOX_BIN"))
+        self.driver = webdriver.Firefox(firefox_binary=binary, executable_path=path, capabilities=cap, options=options)
 
     def closeDriver(self):
         self.driver.close()
