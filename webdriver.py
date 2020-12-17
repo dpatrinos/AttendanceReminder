@@ -1,6 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,15 +11,10 @@ import dotenv
 
 class driver:
     def __init__(self):
-        cap = DesiredCapabilities().FIREFOX
-        cap["marionette"] = True
+        path = os.getenv("CHROMEDRIVER_PATH")
         options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--no-sandbox")
-        path = os.getenv("GECKODRIVER_PATH")
-        binary = FirefoxBinary(os.getenv("FIREFOX_BIN"))
-        self.driver = webdriver.Firefox(firefox_binary=binary, executable_path=path, capabilities=cap, options=options)
+        options.binary_location = os.getenv("GOOGLE_CHROME_SHIM")
+        self.driver = webdriver.Chrome(executable_path=path, chrome_options=options)
 
     def closeDriver(self):
         self.driver.close()
