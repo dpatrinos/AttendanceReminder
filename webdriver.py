@@ -13,7 +13,7 @@ class driver:
     def __init__(self):
         path = os.getenv("CHROMEDRIVER_PATH")
         options = Options()
-        options.binary_location = os.getenv("GOOGLE_CHROME_SHIM")
+        options.binary_location = os.getenv("CHROME_BIN")
         self.driver = webdriver.Chrome(executable_path=path, chrome_options=options)
 
     def closeDriver(self):
