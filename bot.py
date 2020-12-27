@@ -46,12 +46,13 @@ async def on_ready():
             await channel2.send(file=file)
             await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(55)
+
         global run
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
-            if current_time.hour==7 and current_time.minute==2 and not(day_of_week==6 or day_of_week==5):
+            if current_time.hour==7 and current_time.minute==10 and not(day_of_week==6 or day_of_week==5):
                 print("Time if statement true")
                 #getQuote()
                 #file = discord.File("quote.png", filename="quote.png")
@@ -60,19 +61,19 @@ async def on_ready():
                 num=random.randint(0,100)
                 if num%2==0:
                     await channel1.send("Top of the morning! Remember to record your attendance.")
-                    await asyncio.sleep(50)
+                    await asyncio.sleep(60)
                 elif num%3==0:
                     await channel1.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    await asyncio.sleep(50)
+                    await asyncio.sleep(60)
                 elif num%5==0:
                     await channel1.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    await asyncio.sleep(50)
+                    await asyncio.sleep(60)
                 elif num%7==0:
                     await channel1.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    await asyncio.sleep(50)
+                    await asyncio.sleep(60)
                 else:
                     await channel1.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(50)
+                    await asyncio.sleep(60)
             else:
                 print("Time if statment false")
 
