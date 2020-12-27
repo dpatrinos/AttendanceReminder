@@ -44,7 +44,7 @@ async def on_ready():
 
         if (price_k>old_price_k):
             await channel2.send(file=file)
-            await channel2.send("GIVE IT UP FOR " + price_k + "k")
+            await channel2.send("GIVE IT UP FOR " + str(price_k) + "k")
 
         await asyncio.sleep(10)
         global run
