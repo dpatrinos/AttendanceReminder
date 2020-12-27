@@ -37,7 +37,7 @@ async def on_ready():
 
         old_price = price
         update = cryptocompare.get_price('BTC',curr='USD')
-        price = long(update.get('BTC').get('USD'))
+        price = float(update.get('BTC').get('USD'))
 
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
