@@ -11,6 +11,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from webdriver import driver
 import urllib.request
+import cryptocompare
 
 #initialize bot and client variables
 load_dotenv()
@@ -25,37 +26,53 @@ run = True
 @bot.event
 async def on_ready():
     print("Logged in as",bot.user.name)
-    ID = int(os.getenv('CHANNEL_ID'))
-    channel = bot.get_channel(ID)
-    
+    ID1 = int(os.getenv('CHANNEL_ID_1'))
+    ID2 = int(os.getenv('CHANNEL_ID_2'))
+    channel1 = bot.get_channel(ID1)
+    channel2 = bot.get_channel(ID2)
+
+    price = 0
+    file = discord.File("media/krabs.png", filename="kras.png")
     while True:
+
+        old_price = price
+        update = cryptocompare.get_price('BTC',curr='USD')
+        price = long(update.get('BTC').get('USD')))
+
+        old_price_k = int(old_price/1000)
+        price_k = int(price/1000)
+
+        if (price_k>old_price_k):
+            await channel2.send(file=file)
+            await channel2.send("GIVE IT UP FOR " + price_k + "k")
+
         await asyncio.sleep(10)
         global run
         if run:
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
-            if True:#current_time.hour==7 and current_time.minute==2 and not(day_of_week==6 or day_of_week==5):
+            if current_time.hour==7 and current_time.minute==2 and not(day_of_week==6 or day_of_week==5):
                 print("Time if statement true")
-                getQuote()
-                file = discord.File("quote.png", filename="quote.png")
-                await channel.send(file=file)
-                os.remove("quote.png")
+                #getQuote()
+                #file = discord.File("quote.png", filename="quote.png")
+                #await channel1.send(file=file)
+                #os.remove("quote.png")
                 num=random.randint(0,100)
                 if num%2==0:
-                    await channel.send("Top of the morning! Remember to record your attendance.")
-                    await asyncio.sleep(60)
+                    await channel1.send("Top of the morning! Remember to record your attendance.")
+                    await asyncio.sleep(50)
                 elif num%3==0:
-                    await channel.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    await asyncio.sleep(60)
+                    await channel1.send("Buenos Días! Recuerde registrar tu asistencia.")
+                    await asyncio.sleep(50)
                 elif num%5==0:
-                    await channel.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    await asyncio.sleep(60)
+                    await channel1.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
+                    await asyncio.sleep(50)
                 elif num%7==0:
-                    await channel.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    await asyncio.sleep(60)
+                    await channel1.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
+                    await asyncio.sleep(50)
                 else:
-                    await channel.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(60)
+                    await channel1.send("Scrumptuous day! Remember to record your attendance.")
+                    await asyncio.sleep(50)
             else:
                 print("Time if statment false")
 
@@ -141,10 +158,13 @@ def getQuote():
     print("Fetching quote")
     email = os.getenv("MICRO_E")
     password = os.getenv("MICRO_P")
+    
     main_driver = driver()
     main_driver.microsoftLogin(email, password)
+    
     src = main_driver.getSrc()
     print(src)
+    
     urllib.request.urlretrieve(src, "quote.png")
     main_driver.closeDriver()
 
