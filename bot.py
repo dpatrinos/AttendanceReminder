@@ -42,7 +42,7 @@ async def on_ready():
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
 
-        if (price_k>old_price_k and not old_price_k==0):
+        if (price_k>old_price_k and not(old_price_k==0)):
             await channel2.send(file=file)
             await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
 
