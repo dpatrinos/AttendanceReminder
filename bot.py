@@ -32,7 +32,7 @@ async def on_ready():
     channel2 = bot.get_channel(ID2)
 
     price = 0
-    file = discord.File("media/krabs.png", filename="kras.png")
+    file = discord.File("media/krabs.png", filename="krabs.png")
     while True:
 
         old_price = price
@@ -42,9 +42,9 @@ async def on_ready():
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
 
-        if (price_k>old_price_k):
+        if (price_k>old_price_k and not old_price_k==0):
             await channel2.send(file=file)
-            await channel2.send("GIVE IT UP FOR " + str(price_k) + "k")
+            await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
 
         await asyncio.sleep(10)
         global run
