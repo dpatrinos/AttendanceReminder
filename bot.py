@@ -32,7 +32,6 @@ async def on_ready():
     channel2 = bot.get_channel(ID2)
 
     price = 0
-    file = discord.File("media/krabs.png", filename="krabs.png")
     while True:
 
         old_price = price
@@ -42,7 +41,12 @@ async def on_ready():
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
 
+        print("Old price: " + str(old_price_k))
+        print("New price: " + str(price_k))
+
         if (price_k>old_price_k and not(old_price_k==0)):
+            print("Shift from " + str(old_price_k) + "k to " + str(price_k) + "k")
+            file = discord.File("media/krabs.png", filename="krabs.png")
             await channel2.send(file=file)
             await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
 
@@ -54,11 +58,13 @@ async def on_ready():
             day_of_week = datetime.today().weekday()
             if current_time.hour==7 and current_time.minute==10 and not(day_of_week==6 or day_of_week==5):
                 print("Time if statement true")
+                
                 #getQuote()
                 #file = discord.File("quote.png", filename="quote.png")
                 #await channel1.send(file=file)
                 #os.remove("quote.png")
-                num=random.randint(0,100)
+
+                num = random.randint(0,100)
                 if num%2==0:
                     await channel1.send("Top of the morning! Remember to record your attendance.")
                     await asyncio.sleep(60)
