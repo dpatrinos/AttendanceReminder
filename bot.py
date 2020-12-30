@@ -81,7 +81,7 @@ async def on_ready():
                     await asyncio.sleep(55)
                 else:
                     await channel1.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(6)
+                    await asyncio.sleep(55)
             else:
                 print("Time if statment false")
 
