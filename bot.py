@@ -34,6 +34,9 @@ async def on_ready():
     price = 0
     while True:
 
+        await asyncio.sleep(6)
+
+        #check crypto price
         old_price = price
         update = cryptocompare.get_price('BTC',curr='USD')
         price = float(update.get('BTC').get('USD'))
@@ -50,8 +53,7 @@ async def on_ready():
             await channel2.send(file=file)
             await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
 
-        await asyncio.sleep(55)
-
+        #attendence reminding system
         global run
         if run:
             current_time = datetime.now().time()
@@ -67,19 +69,19 @@ async def on_ready():
                 num = random.randint(0,100)
                 if num%2==0:
                     await channel1.send("Top of the morning! Remember to record your attendance.")
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(55)
                 elif num%3==0:
                     await channel1.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(55)
                 elif num%5==0:
                     await channel1.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(55)
                 elif num%7==0:
                     await channel1.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(55)
                 else:
                     await channel1.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(60)
+                    await asyncio.sleep(6)
             else:
                 print("Time if statment false")
 
@@ -112,6 +114,7 @@ async def hurtFeelings(ctx):
 
     author_id = ctx.message.author.id
 
+    #determine message author and set gateway to their email
     if author_id==int(os.getenv('EVAN')):
         sms_gateway = os.getenv('EVAN_E')
 
@@ -130,6 +133,7 @@ async def hurtFeelings(ctx):
     else:
         sms_gateway = os.getenv('DEMETRI_E')
 
+    #connect to Comcast servers
     smtp = "smtp.comcast.net"
     port = 587
 
@@ -137,6 +141,7 @@ async def hurtFeelings(ctx):
     server.starttls()
     server.login(email,password)
 
+    #write message
     msg = MIMEMultipart()
     msg['From'] = email
     msg['To'] = sms_gateway
@@ -146,6 +151,7 @@ async def hurtFeelings(ctx):
 
     sms = msg.as_string()
 
+    #send message
     server.sendmail(email, sms_gateway, sms)
     await ctx.send("{} Check your email ( ͡° ͜ʖ ͡°)".format(ctx.message.author.mention))
 
@@ -153,7 +159,7 @@ async def hurtFeelings(ctx):
 async def sad(ctx):
     print('Sad command received')
 
-    num = random.randint(1,17)
+    num = random.randint(1,18)
 
     name_string = "media/dog" + str(num) + ".jpg"
 
