@@ -21,6 +21,13 @@ client = discord.Client()
 
 #global variables
 run = True
+evan = 0
+ethan = 0
+toby = 0
+tanush = 0
+johny = 0
+demetri = 0
+christian = 0
 
 #ready up
 @bot.event
@@ -32,22 +39,28 @@ async def on_ready():
     channel2 = bot.get_channel(ID2)
 
     price = 0
+    past_prices = []
     while True:
 
-        await asyncio.sleep(6)
+        await asyncio.sleep(55)
 
-        #check crypto price
+        #get crypto price
         old_price = price
         update = cryptocompare.get_price('BTC',curr='USD')
         price = float(update.get('BTC').get('USD'))
 
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
+        print("Old price: " + str(old_price_k) + "k")
+        print("New price: " + str(price_k) + "k")
 
-        print("Old price: " + str(old_price_k))
-        print("New price: " + str(price_k))
+        #past price loop
+        for i in range(price_k):
+            if not(i in past_prices):
+                past_prices.append(i)
 
-        if (price_k>old_price_k and not(old_price_k==0)):
+        #check whether a new k was hit
+        if (price_k>old_price_k and not(price_k in past_prices) and not(old_price_k==0)):
             print("Shift from " + str(old_price_k) + "k to " + str(price_k) + "k")
             file = discord.File("media/krabs.png", filename="krabs.png")
             await channel2.send(file=file)
@@ -69,19 +82,19 @@ async def on_ready():
                 num = random.randint(0,100)
                 if num%2==0:
                     await channel1.send("Top of the morning! Remember to record your attendance.")
-                    await asyncio.sleep(55)
+                    await asyncio.sleep(6)
                 elif num%3==0:
                     await channel1.send("Buenos Días! Recuerde registrar tu asistencia.")
-                    await asyncio.sleep(55)
+                    await asyncio.sleep(6)
                 elif num%5==0:
                     await channel1.send("Bonjour! N'oubliez pas d'enregistrer votre présence.")
-                    await asyncio.sleep(55)
+                    await asyncio.sleep(6)
                 elif num%7==0:
                     await channel1.send("Guten morgen! Denken Sie daran, Ihre Teilnahme aufzuzeichnen.")
-                    await asyncio.sleep(55)
+                    await asyncio.sleep(6)
                 else:
                     await channel1.send("Scrumptuous day! Remember to record your attendance.")
-                    await asyncio.sleep(55)
+                    await asyncio.sleep(6)
             else:
                 print("Time if statment false")
 
@@ -166,6 +179,154 @@ async def sad(ctx):
     file = discord.File(name_string, filename="doggo.jpg")
     await ctx.send(file=file)
     await ctx.send("Here is a doggo for you.")
+
+@bot.command(name="roast-me")
+async def roast(ctx):
+    print('Roast command received')
+
+    author_id = ctx.message.author.id
+
+    global evan
+    global ethan
+    global toby
+    global tanush
+    global johny
+    global demetri
+    global christian
+
+    if author_id==int(os.getenv('EVAN')):
+        if evan==0:
+            await ctx.send("On behalf of your parents, I ask, are you gay?")
+            evan+=1
+
+        elif evan==1:
+            await ctx.send("Your face looks like a door mat")
+            evan+=1
+
+        elif evan==2:
+            await ctx.send("Maybe you'll program an AI to be your girlfriend one day")
+            evan+=1
+        
+        elif evan==3:
+            await ctx.send("Is your ass jealous of the amount of shit that comes out of your mouth.")
+            evan+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+        
+
+    elif author_id==int(os.getenv('ETHAN')):
+        if ethan==0:
+            await ctx.send("Thunder thighs")
+            ethan+=1
+    
+        elif ethan==1:
+            await ctx.send("Imagine saying Adidas so stupidly")
+            ethan+=1
+
+        elif ethan==2:
+            await ctx.send("Go eat some potatoes")
+            ethan+=1
+        
+        elif ethan==3:
+            await ctx.send("Gaelic minus the lic")
+            ethan+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+        
+        
+    elif author_id==int(os.getenv('TOBY')):
+        if toby==0:
+            await ctx.send("Side burns. Boom roasted")
+            toby+=1
+
+        elif toby==1:
+            await ctx.send("Aerospace engineers are poor")
+            toby+=1
+
+        elif toby==2:
+            await ctx.send("You are a libtard")
+            toby+=1
+
+        elif toby==3:
+            await ctx.send("You're so pale that if you went out at night, you'd still manage to get sun burn")
+            toby+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+
+    elif author_id==int(os.getenv('TANUSH')):
+        if tanush==0:
+            await ctx.send("Your face looks like a melted Hershey's kiss")
+            tanush+=1
+    
+        elif tanush==1:
+            await ctx.send("Get a real job")
+            tanush+=1
+
+        elif tanush==2:
+            await ctx.send("It's hard to roast something that malnutrition has already ravaged")
+            tanush+=1
+
+        elif tanush==3:
+            await ctx.send("Stop calling me about my car's extended warranty")
+            tanush+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+
+    elif author_id==int(os.getenv('CHRISTIAN')):
+        if christian==0:
+            await ctx.send("We know that you wear shorts all year to compensate")
+            christian+=1
+    
+        elif christian==1:
+            await ctx.send("You look like Ron Weasley if he never exercised")
+            christian+=1
+
+        elif christian==2:
+            await ctx.send("You drive a Subaru. Boom roasted.")
+            christian+=1
+        
+        elif christian==3:
+            await ctx.send("Everything about you says that you're the illegitimate child of Conan and a muppet")
+            christian+=1
+        
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+
+    elif author_id==int(os.getenv('JOHNY')):
+        if johny==0:
+            await ctx.send("You're Bulgarian. Boom roasted.")
+            johny+=1
+    
+        elif johny==1:
+            await ctx.send("No one like a socialist")
+            johny+=1
+
+        elif johny==2:
+            await ctx.send("You're as greasy as Rem")
+            johny+=1
+
+        elif johny==3:
+            await ctx.send("The trombone isn't the only thing you blow")
+            johny+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
+
+    else:
+        if demetri==0:
+            await ctx.send("The Greek economy. Boom roasted")
+            demetri+=1
+    
+        elif demetri==1:
+            await ctx.send("John Stamos if John Stamos was gay")
+            demetri+=1
+
+        else:
+            await ctx.send("Sorry! All out of roasts for you, for now at least")
 
 def getQuote():
     print("Fetching quote")
