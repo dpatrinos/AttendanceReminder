@@ -21,10 +21,10 @@ client = discord.Client()
 
 #global variables
 run = True
-evan = 0
+evan = 1
 ethan = 0
-toby = 0
-tanush = 0
+toby = 1
+tanush = 1
 johny = 0
 demetri = 0
 christian = 0
@@ -55,12 +55,12 @@ async def on_ready():
         print("New price: " + str(price_k) + "k")
 
         #past price loop
-        for i in range(price_k):
+        for i in range(price_k+1):
             if not(i in past_prices):
                 past_prices.append(i)
 
         #check whether a new k was hit
-        if (price_k>old_price_k and not(price_k in past_prices) and not(old_price_k==0)):
+        if (price_k>old_price_k and not(price_k in past_prices)):
             print("Shift from " + str(old_price_k) + "k to " + str(price_k) + "k")
             file = discord.File("media/krabs.png", filename="krabs.png")
             await channel2.send(file=file)
