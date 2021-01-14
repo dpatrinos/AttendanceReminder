@@ -22,7 +22,7 @@ client = discord.Client()
 #global variables
 run = True
 evan = 1
-ethan = 0
+ethan = 4
 toby = 1
 tanush = 1
 johny = 0
@@ -327,6 +327,26 @@ async def roast(ctx):
 
         else:
             await ctx.send("Sorry! All out of roasts for you, for now at least")
+
+@bot.command(name="mom")
+async def mom(ctx, arg):
+    print('Mom command received')
+
+    if arg=="do":
+        for i in range(0,10):
+            await ctx.send("I did your mom")
+    
+    elif arg=="said":
+        for i in range(0,10):
+            await ctx.send("That's what your mom was saying")
+
+    elif arg=="tanush":
+        for i in range(0,10):
+            await ctx.send("Tanush's mom")
+
+    else:
+        for i in range(0,10):
+            await ctx.send("Your mother")
 
 def getQuote():
     print("Fetching quote")

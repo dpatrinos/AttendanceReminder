@@ -39,6 +39,7 @@ class driver:
             elem.send_keys(Keys.ENTER)
             time.sleep(3)
 
+    #grab the pic
     def getSrc(self):
         driver = self.driver
         driver.get("https://bphawks.schoology.com/course/2946961918/updates")
