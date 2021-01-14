@@ -346,7 +346,7 @@ async def mom(ctx, arg):
 
     else:
         for i in range(0,10):
-            await ctx.send("Your mother")
+            await ctx.send(arg + "your mom")
 
 def getQuote():
     print("Fetching quote")
