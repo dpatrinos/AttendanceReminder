@@ -345,15 +345,16 @@ async def mom(ctx, word, speech):
             await ctx.send("Tanush's mom")
 
     else:
-        if speech=="adj":
-            for i in range(0,10):
-                await ctx.send("Your mom" + word)
+        try:
+            if speech=="adj":
+                for i in range(0,10):
+                    await ctx.send("Your mom" + word)
 
-        elif speech="verb":
-            for i in range(0,10):
-                await ctx.send(word + "your mom")
+            elif speech="verb":
+                for i in range(0,10):
+                    await ctx.send(word + "your mom")
 
-        else:
+        finally:
             for i in range(0,10):
                 await ctx.send("Your mom")
 
