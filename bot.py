@@ -329,24 +329,33 @@ async def roast(ctx):
             await ctx.send("Sorry! All out of roasts for you, for now at least")
 
 @bot.command(name="mom")
-async def mom(ctx, arg):
+async def mom(ctx, word, speech):
     print('Mom command received')
 
-    if arg=="do":
+    if word=="do":
         for i in range(0,10):
-            await ctx.send("I did your mom")
+            await ctx.send("Do your mom")
     
-    elif arg=="said":
+    elif word=="said":
         for i in range(0,10):
             await ctx.send("That's what your mom was saying")
 
-    elif arg=="tanush":
+    elif word=="tanush":
         for i in range(0,10):
             await ctx.send("Tanush's mom")
 
     else:
-        for i in range(0,10):
-            await ctx.send(arg + " your mom")
+        if speech=="adj":
+            for i in range(0,10):
+                await ctx.send("Your mom" + word)
+
+        elif speech="verb":
+            for i in range(0,10):
+                await ctx.send(word + "your mom")
+
+        else:
+            for i in range(0,10):
+                await ctx.send("Your mom")
 
 def getQuote():
     print("Fetching quote")
