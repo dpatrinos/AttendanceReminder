@@ -344,19 +344,18 @@ async def mom(ctx, word, speech):
         for i in range(0,10):
             await ctx.send("Tanush's mom")
 
-    else:
-        try:
-            if speech=="adj":
+    elif len(word)>0:
+        if speech=="adj":
                 for i in range(0,10):
                     await ctx.send("Your mom " + word)
 
-            elif speech=="verb":
-                for i in range(0,10):
-                    await ctx.send(word + " your mom")
-
-        finally:
+        elif speech=="verb":
             for i in range(0,10):
-                await ctx.send("Your mom")
+                await ctx.send(word + " your mom")
+
+    else:
+        for i in range(0,10):
+            await ctx.send("Your mom")
 
 def getQuote():
     print("Fetching quote")
