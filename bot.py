@@ -143,6 +143,9 @@ async def hurtFeelings(ctx):
     elif author_id==int(os.getenv('CHRISTIAN')):
         sms_gateway = os.getenv('CHRISTIAN_E')
 
+    elif author_id==int(os.getenv('JOHNY')):
+        sms_gateway = os.getenv('JOHNY_E')
+
     else:
         sms_gateway = os.getenv('DEMETRI_E')
 
