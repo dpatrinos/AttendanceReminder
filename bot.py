@@ -11,7 +11,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from webdriver import driver
 import urllib.request
-import cryptocompare
+from yahoo_fin import stock_info as si
 
 #initialize bot and client variables
 load_dotenv()
@@ -46,25 +46,30 @@ async def on_ready():
 
         #get crypto price
         old_price = price
-        update = cryptocompare.get_price('BTC',curr='USD')
-        price = float(update.get('BTC').get('USD'))
+        price = float(si.get_live_price("btc-usd"))
 
+        #price calculations
         old_price_k = int(old_price/1000)
         price_k = int(price/1000)
-        print("Old price: " + str(old_price_k) + "k")
-        print("New price: " + str(price_k) + "k")
+        print("Past price: " + str(old_price_k) + "k")
+        print("Current price: " + str(price_k) + "k")
 
         #past price loop
-        for i in range(price_k+1):
+        for i in range(old_price_k+1):
             if not(i in past_prices):
                 past_prices.append(i)
+        
+        next_alert_trigger = int(past_prices[-1]) + 1
+        print('Past prices: ' + str(past_prices) + "\nNext alert trigger price: " + str(next_alert_trigger) + "k")
 
         #check whether a new k was hit
-        if (price_k>old_price_k and not(price_k in past_prices)):
+        if (price_k>old_price_k and not(price_k in past_prices) and old_price_k!=0):
             print("Shift from " + str(old_price_k) + "k to " + str(price_k) + "k")
             file = discord.File("media/krabs.png", filename="krabs.png")
             await channel2.send(file=file)
             await channel2.send("GIVE IT UP FOR " + str(price_k) + "K")
+
+        print("----------")
 
         #attendence reminding system
         global run
@@ -72,7 +77,7 @@ async def on_ready():
             current_time = datetime.now().time()
             day_of_week = datetime.today().weekday()
             if current_time.hour==7 and current_time.minute==10 and not(day_of_week==6 or day_of_week==5):
-                print("Time if statement true")
+                print("Time if statement: true")
                 
                 #getQuote()
                 #file = discord.File("quote.png", filename="quote.png")
@@ -96,7 +101,9 @@ async def on_ready():
                     await channel1.send("Scrumptuous day! Remember to record your attendance.")
                     await asyncio.sleep(6)
             else:
-                print("Time if statment false")
+                print("Time if statment: false")
+
+        print("----------")
 
 @bot.command(name="pause")
 async def pause(ctx):
@@ -332,33 +339,38 @@ async def roast(ctx):
             await ctx.send("Sorry! All out of roasts for you, for now at least")
 
 @bot.command(name="mom")
-async def mom(ctx, word, speech):
+async def mom(ctx, *args):
     print('Mom command received')
 
-    if word=="do":
-        for i in range(0,10):
-            await ctx.send("Do your mom")
-    
-    elif word=="said":
-        for i in range(0,10):
-            await ctx.send("That's what your mom was saying")
+    try:
+        if args[1]=="person":
+            for i in range(0,5):
+                await ctx.send(args[0] + "'s mother")
 
-    elif word=="tanush":
-        for i in range(0,10):
-            await ctx.send("Tanush's mom")
+        elif args[1]!="before" and args[1]!="after" and args[1]!="person":
+            for i in range(0,5):
+                await ctx.send(args[0] + " your mom " + args[1])
 
-    elif len(word)>0:
-        if speech=="adj":
-                for i in range(0,10):
-                    await ctx.send("Your mom " + word)
+        elif args[1]=="before":
+            for i in range(0,5):
+                await ctx.send(args[0] + " your mom")
 
-        elif speech=="verb":
-            for i in range(0,10):
-                await ctx.send(word + " your mom")
+        elif args[1]=="after":
+            for i in range(0,5):
+                await ctx.send("Your mom " + args[0])
 
-    else:
-        for i in range(0,10):
-            await ctx.send("Your mom")
+    except:
+        for i in range(0,5):
+            await ctx.send("Your mother")
+
+@bot.command(name="check")
+async def check(ctx, ticker):
+    print('Price check command received')
+
+    live_price = str(round(si.get_live_price(ticker), 2))
+    today_range = si.get_quote_table(ticker).get("Day's Range")
+
+    await ctx.send("Live price: " + live_price + "\nToday's range: " + today_range)
 
 def getQuote():
     print("Fetching quote")
