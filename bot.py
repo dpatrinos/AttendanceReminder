@@ -12,6 +12,7 @@ from email.mime.multipart import MIMEMultipart
 from webdriver import driver
 import urllib.request
 from yahoo_fin import stock_info as si
+import math
 
 #initialize bot and client variables
 load_dotenv()
@@ -49,8 +50,8 @@ async def on_ready():
         price = float(si.get_live_price("btc-usd"))
 
         #price calculations
-        old_price_k = int(old_price/1000)
-        price_k = int(price/1000)
+        old_price_k = math.trunc(old_price/1000)
+        price_k = math.trunc(price/1000)
         print("Past price: " + str(old_price_k) + "k")
         print("Current price: " + str(price_k) + "k")
 
